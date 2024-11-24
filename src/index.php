@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Chorus - Landing Page</title>
 
     <link rel="stylesheet" href="./assets/css/style.css">
@@ -16,7 +17,7 @@
 
     <!-- NAV BAR -->
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-purpGrad border-purple">
 
         <div class="container-fluid">
 
@@ -45,7 +46,7 @@
 
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="profile-pic">
-                                <img id="perfil" class="border-purple img-fluid rounded-circle" src="./assets/img/defaultProfile.jpg" alt="Default Profile">
+                                <img id="perfil" class="img-fluid rounded-circle border-purple" src="./assets/img/defaultProfile.jpg" alt="Default Profile">
                             </div>
                         </a>
 
@@ -71,37 +72,39 @@
 
     <!-- CARD SECTION -->
 
-    <div class="row">
+    <div class="container">
+        <div class="row">
 
-        <div class="col">
-                <!-- main -->
-            <section class="main">
-                <!-- card -->
-                <div class="card">
-                    <div class="detail">
-                    <div class="detail-images"><img src="https://dl.dropboxusercontent.com/s/pil7jdc7d7m8u0h/pic.png" alt="Picture"></div>
-                    <h3>MohamadReza Deylami</h3>
-                    <h4>UI Designer</h4>
-                    <p>Design is not just what it looks like<br> and feels like. Design is how it works.</p>
+            <div class="col">
+                    <!-- main -->
+                <section class="main">
+                    <!-- card -->
+                    <div class="card">
+                        <div class="detail">
+                        <div class="detail-images"><img class="img-fluid rounded-circle" src="./assets/img/review1.png" alt="Picture"></div>
+                        <h3>James Venture, 35</h3>
+                        <h4>Guitarrista</h4>
+                        <p>Llevaba tiempo pensando en unirme a una banda musical, gracias a Chorus encontré finalmente un grupo de artistas con los que crear un grupo compenetrado con el mismo enfoque de lo que queremos lograr.</p>
 
-                </div>
-            <!-- /card -->
-            </section>
-        </div>
-        <div class="col">
-                <!-- main -->
-            <section class="main">
-                <!-- card -->
-                <div class="card">
-                    <div class="detail">
-                    <div class="detail-images"><img src="https://dl.dropboxusercontent.com/s/pil7jdc7d7m8u0h/pic.png" alt="Picture"></div>
-                    <h3>MohamadReza Deylami</h3>
-                    <h4>UI Designer</h4>
-                    <p>Design is not just what it looks like<br> and feels like. Design is how it works.</p>
+                    </div>
+                <!-- /card -->
+                </section>
+            </div>
+            <div class="col">
+                    <!-- main -->
+                <section class="main">
+                    <!-- card -->
+                    <div class="card">
+                        <div class="detail">
+                        <div class="detail-images"><img class="img-fluid rounded-circle" src="./assets/img/review2.png" alt="Picture"></div>
+                        <h3>George Hammond, 46</h3>
+                        <h4>Promotor</h4>
+                        <p>El acercamiento que Chorus brinda entre la empresa y el artista facilita la producción y colaboración mucho, creando así un vinculo entre estas.</p>
 
-                </div>
-            <!-- /card -->
-            </section>
+                    </div>
+                <!-- /card -->
+                </section>
+            </div>
         </div>
     </div>
 
