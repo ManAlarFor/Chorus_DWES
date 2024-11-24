@@ -42,19 +42,13 @@
 
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 profile-menu"> 
 
-                    <li class="nav-item dropdown">
+                    <li class="nav-item ">
 
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link -toggle" href="#" id="navbar" role="button" data-bs-toggle="" aria-expanded="false">
                             <div class="profile-pic">
                                 <img id="perfil" class="img-fluid rounded-circle border-purple" src="./assets/img/defaultProfile.jpg" alt="Default Profile">
                             </div>
                         </a>
-
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-sliders-h fa-fw"></i> Account</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-fw"></i> Log Out</a></li>
-                        </ul>
 
                     </li>
                 </ul>

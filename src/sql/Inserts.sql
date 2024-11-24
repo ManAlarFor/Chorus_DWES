@@ -1,0 +1,72 @@
+INSERT INTO `Usuario` (`IdUsu`, `NombreUsu`, `ApellidoUsu`, `EdadUsu`, `CorreoUsu`, `ContrasenaUsu`, `PerfilUsu`)
+VALUES
+    (1, 'Juan', 'Pérez', 25, 'juan.perez@example.com', 'password123', 'https://via.placeholder.com/150'),
+    (2, 'María', 'Gómez', 30, 'maria.gomez@example.com', 'securePass456', 'https://via.placeholder.com/150'),
+    (3, 'Carlos', 'Ramírez', 35, 'carlos.ramirez@example.com', 'qwerty789', 'https://via.placeholder.com/150'),
+    (4, 'Lucía', 'Martínez', 28, 'lucia.martinez@example.com', 'passw0rd!', 'https://via.placeholder.com/150'),
+    (5, 'Andrés', 'Sánchez', 40, 'andres.sanchez@example.com', '12345678', 'https://via.placeholder.com/150'),
+    (6, 'Sofía', 'Fernández', 22, 'sofia.fernandez@example.com', 'abcd1234', 'https://via.placeholder.com/150'),
+    (7, 'Pedro', 'López', 33, 'pedro.lopez@example.com', 'lopezPedro33', 'https://via.placeholder.com/150'),
+    (8, 'Ana', 'Hernández', 27, 'ana.hernandez@example.com', 'anaHdez!27', 'https://via.placeholder.com/150'),
+    (9, 'Miguel', 'Torres', 45, 'miguel.torres@example.com', 'torresMiguel45', 'https://via.placeholder.com/150'),
+    (10, 'Laura', 'Morales', 19, 'laura.morales@example.com', 'laura19pass', 'https://via.placeholder.com/150');
+
+
+INSERT INTO `Funcion` (`IdFuncion`, `NombreFuncion`)
+VALUES
+    (1, 'Cantante'),
+    (2, 'Bajista'),
+    (3, 'Guitarrista'),
+    (4, 'Baterista'),
+    (5, 'Pianista'),
+    (6, 'Trompetista'),
+    (7, 'Saxofonista'),
+    (8, 'Violinista'),
+    (9, 'Productor Musical'),
+    (10, 'Ingeniero de Sonido'),
+    (11, 'DJ'),
+    (12, 'Compositor'),
+    (13, 'Letrista'),
+    (14, 'Arreglista'),
+    (15, 'Director de Orquesta'),
+    (16, 'Percusionista'),
+    (17, 'Flautista'),
+    (18, 'Clarinettista'),
+    (19, 'Contrabajista'),
+    (20, 'Trombonista'),
+    (21, 'Oboísta'),
+    (22, 'Corista'),
+    (23, 'Maestro de Canto'),
+    (24, 'Músico de Estudio'),
+    (25, 'Técnico de Grabación'),
+    (26, 'Violonchelista'),
+    (27, 'Bandoneonista'),
+    (28, 'Arpista'),
+    (29, 'Instrumentista de Viento-Madera'),
+    (30, 'Instrumentista de Viento-Metal');
+
+
+INSERT INTO `usuario_funcion` (`IdUsu`, `IdFun`)
+VALUES
+    (1, 1), 
+    (1, 3), 
+    (2, 6), 
+    (3, 2), 
+    (3, 4), 
+    (4, 1), 
+    (5, 9), 
+    (6, 12),
+    (6, 1), 
+    (7, 10),
+    (8, 11),
+    (9, 5), 
+    (9, 12),
+    (10, 1),
+    (10, 13),
+    (1, 14), 
+    (3, 12), 
+    (6, 2),  
+    (5, 14), 
+    (7, 15), 
+    (2, 16), 
+    (8, 17); 
