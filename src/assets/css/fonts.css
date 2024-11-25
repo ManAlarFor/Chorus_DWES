@@ -1,0 +1,12 @@
+/***************************/
+/**         Fonts         **/
+/***************************/
+@font-face {
+    font-family: instrumentSerif;
+    src: url(../fonts/InstrumentSerif-Regular.ttf);
+}
+
+@font-face {
+    font-family: instrumentSans;
+    src: url(../fonts/InstrumentSans-Regular.ttf);
+}
