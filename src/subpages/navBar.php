@@ -15,7 +15,7 @@
             </li>
 
             <li class="profile-pic">
-                <a class="nav-link" href="/"><img src="./assets/img/chorusIcon.png" alt=""></a>
+                <a class="nav-link" href="/"><img src="/assets/img/chorusIcon.png" alt=""></a>
             </li>
 
         </ul>
@@ -37,7 +37,7 @@
                     <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="profile-pic">
-                            <img src="<?= ($usuario->perfil)?$usuario->perfil:"./assets/img/defaultProfile.jpg" ?>" alt="Profile Picture">
+                            <img src="<?= ($usuario->perfil)?$usuario->perfil:"/assets/img/defaultProfile.jpg" ?>" alt="Profile Picture">
                         </div>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

@@ -5,7 +5,7 @@
         public string $nombre ;
         public string $apellido ;
         public string $correo ;
-        public string $perfil ;
+        public string | null $perfil ;
         public int    $edad ;
 
         public function __construct($nombre, $apellido, $correo, $perfil, $edad){
