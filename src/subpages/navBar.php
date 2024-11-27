@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-purpGrad border-purple">
+<nav class="navbar navbar-expand-lg navbar-light bg-purpGrad border-purple sticky-top">
 
 <div class="container-fluid">
 

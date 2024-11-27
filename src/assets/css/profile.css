@@ -4,3 +4,16 @@
     background-color: #F6E8F9 !important;
 
 }
+
+.border-purple{
+
+    border: 2px solid #D08EDE ;
+
+}
+
+.w-max {
+
+    width: 150px;
+    height: 150px;
+
+}

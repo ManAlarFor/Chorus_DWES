@@ -27,5 +27,43 @@
 
     <!-- MAIN PAGE -->
 
+    <div class="container-fluid text-center">
+        <div class="row">
+            <div class="col-3 bg-purple border-purple position-fixed pt-5 pb-5"> 
+
+                <div class="row mt-5 mb-3">
+
+                    <div class="col"></div>
+                    <div class="col">
+
+                        <img class="rounded-circle m-5 w-max" src="<?= ($usuario->perfil)?$usuario->perfil:"/assets/img/defaultProfile.jpg" ?>" alt="">
+
+                    </div>
+                    <div class="col"></div>
+
+                </div>
+
+                <div class="row mb-5">
+
+                    <h3><?= $usuario->nombre ?> <?= $usuario->apellido ?></h3>
+
+                </div>
+
+                <div class="row mb-5">
+
+                    <div class="col"></div>
+                    <div class="col p-4">
+                        <button class="btn btn-warning">Editar Perfil</button>
+                    </div>
+                    <div class="col"></div>
+
+                </div>
+
+            </div>
+
+            <div class="col-9"></div>
+        </div>
+    </div>
+
 </body>
 </html>
