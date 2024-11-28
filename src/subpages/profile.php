@@ -59,7 +59,7 @@
 
     <!-- MAIN PAGE -->
 
-    <div class="container-fluid text-center">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-3 bg-purple border-purple altura sticky pt-5 pb-5"> 
 
@@ -68,14 +68,14 @@
                     <div class="col"></div>
                     <div class="col">
 
-                        <img class="rounded-circle m-5 w-max" src="<?= ($usuario->perfil)?$usuario->perfil:"/assets/img/defaultProfile.jpg" ?>" alt="">
+                        <img class="rounded-circle m-5 w-max text-center" src="<?= ($usuario->perfil)?$usuario->perfil:"/assets/img/defaultProfile.jpg" ?>" alt="">
 
                     </div>
                     <div class="col"></div>
 
                 </div>
 
-                <div class="row mb-4">
+                <div class="row mb-4 text-center">
 
                     <h3><?= $usuario->nombre ?> <?= $usuario->apellido ?></h3>
                     <h4><?= $usuario->edad ?></h4>
@@ -97,9 +97,12 @@
 
                 </div>
 
-                <div class="row mb-5">
+                <div class="row mb-5 text-center">
 
                     <div class="col"></div>
+                    <div class="col p-4">
+                        <a href="./portfolioAdd.php"><button class="btn btn-success">Añadir Publicación</button></a>
+                    </div>
                     <div class="col p-4">
                         <button class="btn btn-warning">Editar Perfil</button>
                     </div>
@@ -117,14 +120,14 @@
 
                 ?>
 
-                    <div class="row mt-4">
+                    <div class="row mt-4 text-center">
                         <h1>Descripción</h1>
 
                         <div class="col-2"></div>
                         <div class="col-8">
                             <!-- main -->
                             <div class="card bg-purple">
-                                    <p class="m-4"><?= $usuario->descripcion ?></p>
+                                    <p class="m-4 text-center"><?= $usuario->descripcion ?></p>
                             </div>
                         </div>
                         <div class="col-2"></div>
@@ -143,7 +146,7 @@
 
                 ?>
 
-                    <h1 class="mt-5">Publicaciones</h1>
+                    <h1 class="mt-5 text-center">Publicaciones</h1>
 
 
                 <?php
@@ -156,13 +159,26 @@
                         
                         <div class="col-2"></div>
                         <div class="col-8">
-                            <!-- main -->
                             <div class="card bg-purple">
                                 <div class="row">
-                                    <h4 class="pt-4"><?= $publicaciones[$i]["TituloPublic"] ?></h4>
+                                    <div class="col-1"></div>
+                                    <div class="mt-5 col-6">
+                                        <h4><?= $publicaciones[$i]["TituloPublic"] ?></h4>
+                                    </div>
+                                    <div class="mt-5 col-2">
+                                        <button class="btn btn-warning">Editar</button>
+                                    </div>
+                                    <div class="mt-5 col-2">
+                                    <form action="/subpages/portfolioDelete.php" method="get">
+                                        <input type="hidden" name="id" value="<?= htmlspecialchars($publicaciones[$i]["IdPublic"]) ?>">
+                                        <button class="btn btn-danger">Eliminar</button>
+                                    </form>
+
+                                    </div>
+                                    <div class="col-1"></div>
                                 </div>
 
-                                <div class="row">
+                                <div class="row text-center">
                                     <div class="col-1"></div>
                                     <div class="col-10">
                                     <p class="m-4"><?= $publicaciones[$i]["TextoPublic"] ?></p>
@@ -172,12 +188,10 @@
 
                                 <?php if($publicaciones[$i]["ImagenPublic"]): ?>
 
-                                    <div class="row pb-3">
-                                        <div class="col"></div>
+                                    <div class="row pb-3 text-center">
                                         <div class="col">
-                                            <img src="<?= $publicaciones[$i]["ImagenPublic"] ?>" alt="">
+                                            <img class="pub-image" src="<?= $publicaciones[$i]["ImagenPublic"] ?>" alt="">
                                         </div>
-                                        <div class="col"></div>
                                     </div>
 
                                 <?php endif ; ?>
