@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <script src="../js/dropdown.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -29,9 +28,9 @@
 
     <div class="container-fluid text-center">
         <div class="row">
-            <div class="col-3 bg-purple border-purple position-fixed pt-5 pb-5"> 
+            <div class="col-3 bg-purple border-purple position-sticky pt-5 pb-5"> 
 
-                <div class="row mt-5 mb-3">
+                <div class="row mt-4 mb-3">
 
                     <div class="col"></div>
                     <div class="col">
@@ -43,9 +42,25 @@
 
                 </div>
 
-                <div class="row mb-5">
+                <div class="row mb-4">
 
                     <h3><?= $usuario->nombre ?> <?= $usuario->apellido ?></h3>
+                    <h4><?= $usuario->edad ?></h4>
+                    <?php 
+
+                        if(!empty($usuario->funcion)):
+
+                            for($i = 0 ; (empty($usuario->funcion)) | $i < count($usuario->funcion); $i++): 
+
+                    ?>
+
+                        <h4><?= $usuario->funcion[$i] ?></h4>
+
+                    <?php 
+                            endfor ; 
+
+                        endif ;
+                    ?>
 
                 </div>
 
@@ -61,7 +76,36 @@
 
             </div>
 
-            <div class="col-9"></div>
+            <div class="col-9">
+
+                <?php 
+
+                    if($usuario->descripcion):
+
+                ?>
+
+                <div class="row mt-3 mb-3">
+
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <!-- main -->
+                        <div class="card">
+                                <h3 class="p-4">Descripción</h3>
+                                <p><?= $usuario->descripcion ?></p>
+                        </div>
+                    </div>
+                    <div class="col-2"></div>
+
+                </div>
+
+                <?php 
+
+                    endif;
+
+                ?>
+
+
+            </div>
         </div>
     </div>
 

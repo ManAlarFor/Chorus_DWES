@@ -36,14 +36,8 @@ h1{
     height: 0;
 }
 
-.main{
-	width: 600px;
-	height: auto;
-	margin: 50px auto;
-}
-
 .card{
-	width: 500px;
+	width: 455px;
 	height: 200px;
 	margin:30px auto;
 	background-color: #ECCFF1 !important ;

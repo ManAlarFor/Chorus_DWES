@@ -17,3 +17,79 @@
     height: 150px;
 
 }
+
+
+/***************************/
+/**         Cards         **/
+/***************************/
+
+
+.clear {
+    clear: both;
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+
+.card{
+	width: 455px;
+	height: 200px;
+	margin:30px auto;
+	background-color: #ECCFF1 !important ;
+    border-radius: 15px !important;
+    box-shadow: 2px 2px grey ;
+}
+.detail{
+	width: 450px;
+	height: 170px;
+	margin:9px auto;
+}
+.detail-images{
+	width: 88px;
+	height: 91px;
+	text-align: center;
+	color: #8b8b8b;
+}
+.card h3{
+	color: #3b3b3b;
+	font-size: 16px;
+}
+.card h4{
+	color: #8b8b8b;
+	margin-left: 100px;
+	font-size: 13px;
+	font-style: italic;
+}
+.card p{
+	color: #787878;
+	font-weight: 400;
+}
+.content-shield{
+	width: 365px;
+	border-top: solid 1px #dedede;
+	margin:20px auto;
+}
+.card ul{
+	margin-top: -5px;
+}
+.card ul li{
+	display: inline;
+	margin-right: 6px;
+}
+.card ul li a{
+	color: #FFF;
+	display: inline-block;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	background-color: #DEDEDE;
+    border-radius: 2px;
+    width: 30px;
+    text-align: center;
+}
+.card ul li a:hover{
+	background-color: #b1b1b1;
+}
+
+

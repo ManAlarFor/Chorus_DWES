@@ -25,7 +25,7 @@
 
         $correo     = $sqli->real_escape_string($correo) ;
         $contrasena = $sqli->real_escape_string($contrasena) ;
-        $sql = "SELECT NombreUsu, ApellidoUsu, CorreoUsu, PerfilUsu, EdadUsu FROM Usuario 
+        $sql = "SELECT IdUsu, NombreUsu, ApellidoUsu, CorreoUsu, PerfilUsu, EdadUsu, Descripcion FROM Usuario 
                 WHERE CorreoUsu = '{$correo}' AND ContrasenaUsu = '{$contrasena}' ;" ;        
 
         $datos = $sqli->query($sql) ;
@@ -36,12 +36,41 @@
             $usuario_data = $datos->fetch_assoc();
 
             $usuario = new Usuario(
+                $usuario_data['IdUsu'],
                 $usuario_data['NombreUsu'],
                 $usuario_data['ApellidoUsu'],
                 $usuario_data['CorreoUsu'],
                 $usuario_data['PerfilUsu'],
-                $usuario_data['EdadUsu']
+                $usuario_data['EdadUsu'],
+                $usuario_data['Descripcion']
             );
+
+            $sql = "SELECT IdFun FROM usuario_funcion 
+                    WHERE IdUsu = '{$usuario->id}';" ;     
+        $result = $sqli->query($sql);
+
+        if ($result && $result->num_rows > 0) {
+            $result = $result->fetch_all(MYSQLI_NUM);
+            $idFun = $result;
+
+            $funciones = [] ;
+
+            for($i = 0 ; $i < count($idFun) ; $i++):
+
+                $sql = "SELECT NombreFuncion FROM Funcion 
+                        WHERE IdFuncion = '{$idFun[$i][0]}';" ;  
+
+
+                $result = $sqli->query($sql);
+                $result = $result->fetch_assoc();
+
+                array_push($funciones, $result['NombreFuncion']) ;
+
+            endfor ;
+
+            $usuario->getFuncion($funciones) ;
+        } 
+
 
             $sqli->close() ;
 
