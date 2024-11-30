@@ -4,33 +4,35 @@
 
     $visible = "d-none" ;
 
+    try {
+
+        $sqli = new mysqli("chorus_db", "root", "", "chorus_db") ;            
+
+    } catch(mysqli_sql_exception $excepcion) {
+
+        die() ;
+
+    }
+
     if(!empty($_SESSION)):
 
         die(header("location: /")) ;
 
     elseif(!empty($_POST)):
 
-        $correo= $_POST["correo"] ;
+        $correo     = $_POST["correo"] ;
         $contrasena = $_POST["passwd"] ;
-        $imagen= $_POST["imagen"] ;
-        $nombre= $_POST["nombre"] ;
-        $apellido= $_POST["apellido"] ;
-        $edad= $_POST["edad"] ;
-        $descrip= $_POST["descrip"] ;
+        $imagen     = $_POST["imagen"] ;
+        $nombre     = $_POST["nombre"] ;
+        $apellido   = $_POST["apellido"] ;
+        $edad       = $_POST["edad"] ;
+        $descrip    = $_POST["descrip"] ;
+        $funcion[]  = $_POST["funcion"] ;
 
+        if( $correo && $contrasena && $nombre && $edad && $apellido):
 
-        try {
-
-            $sqli = new mysqli("chorus_db", "root", "", "chorus_db") ;            
-
-        } catch(mysqli_sql_exception $excepcion) {
-
-            die() ;
-
-        }
-        $finalImagen = (isset($imagen))?($sqli->real_escape_string($imagen)):Null;
+        $finalImagen = (isset($imagen))?$imagen:null;
         $finalDescrip = (isset($descrip))?($sqli->real_escape_string($descrip)):Null;
-
 
         $correo     = $sqli->real_escape_string($correo) ;
         $contrasena = $sqli->real_escape_string($contrasena) ;
@@ -38,13 +40,52 @@
         $apellido = $sqli->real_escape_string($apellido) ;
         $edad = $sqli->real_escape_string($edad) ;
         $sql = "INSERT INTO Usuario(NombreUsu, ApellidoUsu, EdadUsu, CorreoUsu, ContrasenaUsu, PerfilUsu, Descripcion)
-                VALUES ('{$nombre}', '{$apellido}', '{$edad}', '{$correo}', '{$contrasena}', '{$imagen}', '{$descrip}');" ;        
+                VALUES ('{$nombre}', '{$apellido}', '{$edad}', '{$correo}', '{$contrasena}', '{$finalImagen}', '{$finalDescrip}');" ;        
 
-        $datos = $sqli->query($sql) ;
+        $sqli->query($sql) ;
 
-        die(header("location: /subpages/login.php")) ;
+        if (is_array($funcion)&&!empty($funcion)):
+                $sql = "SELECT IdUsu FROM Usuario
+                        WHERE NombreUsu = '{$nombre}'" ;
+
+                $idUsu = $sqli->query(($sql)) ;
+                
+                $idUsu = $idUsu->fetch_assoc() ;
+
+
+                for($i = 0 ; $i < count($funcion[0]) ; $i++) :
+
+                    $sql = "SELECT IdFuncion FROM Funcion
+                            WHERE NombreFuncion = '{$funcion[0][$i]}'" ;
+
+                    $idFun = $sqli->query(($sql)) ;
+
+                    $idFun = $idFun->fetch_assoc() ;
+
+                    $sql = "INSERT INTO usuario_funcion
+                            VALUES ('{$idUsu['IdUsu']}', '{$idFun['IdFuncion']}')" ;
+
+                    $sqli->query(($sql)) ;
+
+                endfor ;
+
+                endif ;
+
+            die(header("location: /subpages/login.php")) ;
+
+        endif ;
 
         $visible = "" ;
+
+    endif;
+
+    $sql = "SELECT NombreFuncion FROM Funcion" ;
+
+    $datos = $sqli->query($sql) ;
+
+    if ($datos->num_rows > 0):
+
+        $funciones = $datos->fetch_all();
 
     endif;
 
@@ -71,7 +112,7 @@
         <div class="card-header bg-titulo text-center">
             <h1>CHORUS - SIGN IN</h1>
         </div>
-        <form action="signin.php" method="post" class="p-5 bg-clarito">
+        <form action="signin.php" method="post" class="p-3 bg-clarito">
 
             <div class="container">
                 <div class="row">
@@ -93,6 +134,28 @@
                                     <label for="imagen" class="form-label">Imagen (Opcional)</label>
                                     <input type="text" class="form-control bg-input" id="imagen" name="imagen">
                                 </div>
+                                <div class="mb-3">
+                                    <label for="funcion[]" class="form-label">Función</label>
+                                    <select class="w-100" class="bg-input" id="funcion" name="funcion[]" multiple>
+                                        <option selected value="">Ningún Papel</option>
+
+                                        <?php 
+
+                                            for($i = 0 ; $i < count($funciones) ;$i++):
+
+                                        ?>
+
+                                        <option value="<?= $funciones[$i][0] ?>"><?= $funciones[$i][0] ?></option>
+
+                                        <?php 
+
+
+                                            endfor ;
+
+                                        ?>
+
+                                    </select>
+                                </div>
 
                             </div>
 
@@ -111,23 +174,18 @@
                                     <label for="edad" class="form-label">Edad</label>
                                     <input type="number" class="form-control bg-input" id="edad" name="edad">
                                 </div>
+                                <div class="mb-3">
 
-                            </div>
-                        </div>
+                                    <div class="row">
+                                        <label class="form-label" for="descrip">Descripción</label>
+                                    </div>
+                                    <div class="row">
+                                        <textarea class="bg-input" name="descrip" id="descrip" rows="3" cols="15"></textarea>
+                                    </div>
 
-                        <div class="row">
-
-                            <div class="mb-3">
-
-                                <div class="row">
-                                    <label for="descrip">Descripción</label>
-                                </div>
-                                <div class="row">
-                                    <textarea class="bg-input" name="descrip" id="descrip" rows="2"></textarea>
                                 </div>
 
                             </div>
-
                         </div>
 
                         <div class="row p-3">
@@ -139,7 +197,7 @@
                         </div>
 
                         <div class="row text-center text-danger <?= $visible ?>">
-                            <p>El usuario buscado no existe</p>
+                            <p>Los campos deben estar completos</p>
                         </div>
 
                         <div class="row text-center">
