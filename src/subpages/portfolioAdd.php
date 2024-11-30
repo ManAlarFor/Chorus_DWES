@@ -104,7 +104,7 @@ endif;
         <div class="row p-3">
             <div class="col"></div>
             <div class="col">
-                <button class="btn bg-titulo w-100 fs-3">Entrar</button>
+                <button class="btn bg-titulo w-100 fs-3">Publicar</button>
             </div>
             <div class="col"></div>
         </div>

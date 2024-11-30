@@ -104,7 +104,7 @@
 
     <div class="card position-absolute top-50 start-50 translate-middle"  style="width: 40rem;">
         <div class="card-header bg-titulo text-center">
-            <h1>CHORUS</h1>
+            <h1>CHORUS - LOGIN</h1>
         </div>
         <form action="login.php" method="post" class="p-5 bg-clarito">
             <div class="mb-3">
@@ -123,8 +123,11 @@
                 </div>
                 <div class="col"></div>
             </div>
-            <div class="text-center text-danger <?= $visible ?>">
+            <div class="row text-center text-danger <?= $visible ?>">
                 <p>El usuario buscado no existe</p>
+            </div>
+            <div class="row text-center">
+                <p>¿No tienes cuenta? Haz click <a href="./signin.php">aquí</a>.</p>
             </div>
         </form>
     </div>
