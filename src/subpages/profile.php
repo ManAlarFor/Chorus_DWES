@@ -166,7 +166,13 @@
                                         <h4><?= $publicaciones[$i]["TituloPublic"] ?></h4>
                                     </div>
                                     <div class="mt-5 col-2">
-                                        <button class="btn btn-warning">Editar</button>
+                                        <form action="/subpages/portfolioEdit.php" method="get">
+                                            <input type="hidden" name="id" value="<?= htmlspecialchars($publicaciones[$i]["IdPublic"]) ?>">
+                                            <input type="hidden" name="titulo" value="<?= htmlspecialchars($publicaciones[$i]["TituloPublic"]) ?>">
+                                            <input type="hidden" name="contenido" value="<?= htmlspecialchars($publicaciones[$i]["TextoPublic"]) ?>">
+                                            <input type="hidden" name="imagen" value="<?= htmlspecialchars($publicaciones[$i]["ImagenPublic"]) ?>">
+                                            <button class="btn btn-warning">Editar</button>
+                                        </form>
                                     </div>
                                     <div class="mt-5 col-2">
                                     <form action="/subpages/portfolioDelete.php" method="get">
@@ -207,8 +213,17 @@
 
                     endif;
 
+                    if((empty($publicaciones))&&!($usuario->descripcion)):
+
                 ?>
 
+                <h1 class="mt-5 text-center">Este perfil no tiene contenidos</h1>
+
+                <?php 
+
+                    endif;
+
+                ?>
 
             </div>
         </div>
