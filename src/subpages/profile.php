@@ -77,23 +77,58 @@
 
                 <div class="row mb-4 text-center">
 
-                    <h3><?= $usuario->nombre ?> <?= $usuario->apellido ?></h3>
-                    <h4><?= $usuario->edad ?></h4>
-                    <?php 
+                    <div class="row">
+                        <h3><?= $usuario->nombre ?> <?= $usuario->apellido ?></h3>
+                    </div>
+                    <div class="row">
+                        <h4><?= $usuario->edad ?></h4>
+                    </div>
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col">
+                            <?php 
 
-                        if(!empty($usuario->funcion)):
+                                if(!empty($usuario->funcion) && 2 < count($usuario->funcion)):
 
-                            for($i = 0 ; (empty($usuario->funcion)) | $i < count($usuario->funcion); $i++): 
+                            ?>
 
-                    ?>
+                                <label for="funciones">Ver funciones</label>
 
-                        <h4><?= $usuario->funcion[$i] ?></h4>
+                                <select id="funciones" name="funciones">
 
-                    <?php 
-                            endfor ; 
+                                <option disabled selected>-----------------</option>
 
-                        endif ;
-                    ?>
+                                <?php 
+
+                                        for($i = 0 ; (empty($usuario->funcion)) | $i < count($usuario->funcion); $i++): 
+
+                                ?>
+
+                                        <option disabled><?= $usuario->funcion[$i] ?></option>
+
+                                <?php 
+                                        endfor ; 
+                                ?>
+
+                                </select>
+
+                            <?php
+
+                                elseif(!empty($usuario->funcion) && 2 >= count($usuario->funcion)):
+
+                                    for($i = 0 ; (empty($usuario->funcion)) | $i < count($usuario->funcion); $i++): 
+                            ?>
+
+                                        <h4><?=$usuario->funcion[$i]?></h4>
+
+                            <?php
+                                    endfor ; 
+                                endif ;
+                            ?>
+
+                        </div>
+                        <div class="col"></div>
+                    </div>
 
                 </div>
 

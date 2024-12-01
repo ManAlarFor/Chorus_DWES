@@ -79,7 +79,7 @@
 
             $_SESSION["_usuario"] = serialize($usuario) ;
 
-            die(header("location: /subpages/login.php")) ;
+            header("location: /subpages/login.php") ;
 
         endif ;
 
