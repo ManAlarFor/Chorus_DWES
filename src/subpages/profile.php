@@ -104,7 +104,20 @@
                         <a href="./portfolioAdd.php"><button class="btn btn-success">Añadir Publicación</button></a>
                     </div>
                     <div class="col p-4">
-                        <button class="btn btn-warning">Editar Perfil</button>
+
+                        <form action="/subpages/profileEdit.php" method="get">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars($usuario->id) ?>">
+                            <input type="hidden" name="nombre" value="<?= htmlspecialchars($usuario->nombre) ?>">
+                            <input type="hidden" name="apellido" value="<?= htmlspecialchars($usuario->apellido) ?>">
+                            <input type="hidden" name="imagen" value="<?= htmlspecialchars( ($usuario->perfil)?($usuario->perfil):"") ?>">
+                            <input type="hidden" name="descripcion" value="<?= htmlspecialchars( $usuario->descripcion) ?>">
+                            <input type="hidden" name="correo" value="<?= htmlspecialchars( $usuario->correo) ?>">
+                            <input type="hidden" name="edad" value="<?= htmlspecialchars( $usuario->edad) ?>">
+                            <?php if(!empty($usuario->funcion)):?>
+                                <input type="hidden" name="funcion" value="<?= htmlspecialchars( implode(",", $usuario->funcion)) ?>">
+                            <?php endif; ?>
+                            <button class="btn btn-warning">Editar Perfil</button>
+                        </form>
                     </div>
                     <div class="col"></div>
 

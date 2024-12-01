@@ -35,9 +35,69 @@
 
         }
 
-        public function getFuncion($funcion) {
+
+        /**
+         * @param  string|null $funcion
+         * @return void
+         */
+        public function setFuncion($funcion) {
             $this->funcion = $funcion ;
         }
+
+
+        /**
+         * @param  string $nombre
+         * @return void
+         */
+        public function setNombre($nombre) {
+            $this->nombre = $nombre ;
+        }
+
+
+        /**
+         * @param  string $apellido
+         * @return void
+         */
+        public function setApellido($apellido) {
+            $this->apellido = $apellido ;
+        }
+
+
+        /**
+         * @param  int $edad
+         * @return void
+         */
+        public function setEdad($edad) {
+            $this->edad = $edad ;
+        }
+
+
+        /**
+         * @param  string $correo
+         * @return void
+         */
+        public function setCorreo($correo) {
+            $this->correo = $correo ;
+        }
+
+
+        /**
+         * @param  string $descripcion
+         * @return void
+         */
+        public function setDescripcion($descripcion) {
+            $this->descripcion = $descripcion ;
+        }
+
+
+        /**
+         * @param  string $perfil
+         * @return void
+         */
+        public function setPerfil($perfil) {
+            $this->perfil = $perfil ;
+        }
+
 
     }
 

@@ -15,7 +15,6 @@ if(!empty($_POST)):
 
     if (!empty($titulo) && !empty($contenido)):
 
-        $imagen = ($imagen)?$imagen:null;
 
         try {
 
@@ -33,7 +32,7 @@ if(!empty($_POST)):
 
         $titulo     = $sqli->real_escape_string($titulo) ;
         $contenido = $sqli->real_escape_string($contenido) ;
-        $imagen = $sqli->real_escape_string($imagen) ;
+        $imagen = ($imagen)?$sqli->real_escape_string($imagen):null;
         $sql = "INSERT INTO portfolio (TituloPublic,TextoPublic,ImagenPublic,IdUsu)
                 VALUES ('{$titulo}','{$contenido}','{$imagen}','{$usuario->id}')" ;        
 

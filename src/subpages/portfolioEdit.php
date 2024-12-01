@@ -10,6 +10,7 @@ $visible = "d-none" ;
 
 if(!empty($_POST)):
 
+    $id= $_POST["id"] ;
     $titulo= $_POST["titulo"] ;
     $contenido = $_POST["contenido"] ;
     $imagen = $_POST["imagen"] ;
@@ -38,7 +39,7 @@ if(!empty($_POST)):
 
         $sql = "UPDATE portfolio
                 SET TituloPublic = '{$titulo}', TextoPublic = '{$contenido}',ImagenPublic = '{$finalImagen}'
-                WHERE IdPublic = '{$_POST['id']}'" ;  
+                WHERE IdPublic = '{$id}'" ;  
 
         $sqli->query($sql) ;
 

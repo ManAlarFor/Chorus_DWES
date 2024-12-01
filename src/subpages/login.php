@@ -68,7 +68,7 @@
 
             endfor ;
 
-            $usuario->getFuncion($funciones) ;
+            $usuario->setFuncion($funciones) ;
         } 
 
 
