@@ -16,22 +16,56 @@
 
     }
 
-    $sql = "SELECT IdPublic, TituloPublic, TextoPublic, ImagenPublic FROM portfolio
-            WHERE IdUsu = '{$usuario->id}'" ;
+    if(isset($_POST["id"])):
+
+        $sql = "SELECT NombreUsu, ApellidoUsu, CorreoUsu, PerfilUsu, EdadUsu, Descripcion FROM Usuario 
+                WHERE IdUsu = '{$_POST["id"]}'" ;
+
+        $perfil = $sqli->query($sql) ;
+
+        $perfil = $perfil->fetch_assoc();
+
+        $sql = "SELECT IdPublic, TituloPublic, TextoPublic, ImagenPublic FROM portfolio
+                WHERE IdUsu = '{$_POST["id"]}'" ;
 
         $datos = $sqli->query($sql) ;
 
         if ($datos->num_rows > 0):
 
-            for($i = 0 ; $i < $datos->num_rows ; $i++):
+            $publ = $datos->fetch_all(MYSQLI_ASSOC);
 
-                $publ = $datos->fetch_assoc();
+            array_push($publicaciones, $publ) ;
 
-                array_push($publicaciones, $publ) ;
+        endif ;
+
+        $sql = "SELECT IdFun FROM usuario_funcion 
+        WHERE IdUsu = '{$_POST["id"]}';" ;     
+
+        $result = $sqli->query($sql);
+
+        if ($result && $result->num_rows > 0) {
+
+            $result = $result->fetch_all(MYSQLI_NUM);
+            $idFun = $result;
+
+            $funciones = [] ;
+
+            for($i = 0 ; $i < count($idFun) ; $i++):
+
+                $sql = "SELECT NombreFuncion FROM Funcion 
+                        WHERE IdFuncion = '{$idFun[$i][0]}';" ;  
+
+
+                $result = $sqli->query($sql);
+                $result = $result->fetch_assoc();
+
+                array_push($funciones, $result['NombreFuncion']) ;
 
             endfor ;
 
-        endif
+        }
+
+    endif;
 
 
 ?>
@@ -40,12 +74,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chorus - <?= $usuario->nombre ?> <?= $usuario->apellido ?> Profile</title>
+    <title>Chorus - Perfil de <?= $perfil["NombreUsu"] ?> <?= $perfil["ApellidoUsu"] ?></title>
 
     <link rel="stylesheet" href="../assets/css/fonts.css">
     <link rel="stylesheet" href="../assets/css/navbar.css">
     <link rel="stylesheet" href="../assets/css/profile.css">
-    <link rel="shortcut icon" href="../assets/img/chorusIcon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/img/chorusIcon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -68,7 +102,7 @@
                     <div class="col"></div>
                     <div class="col">
 
-                        <img class="rounded-circle m-5 w-max text-center" src="<?= ($usuario->perfil)?$usuario->perfil:"/assets/img/defaultProfile.jpg" ?>" alt="">
+                        <img class="rounded-circle m-5 w-max text-center" src="<?= ($perfil["PerfilUsu"])?$perfil["PerfilUsu"]:"/assets/img/defaultProfile.jpg" ?>" alt="">
 
                     </div>
                     <div class="col"></div>
@@ -78,17 +112,17 @@
                 <div class="row mb-4 text-center">
 
                     <div class="row">
-                        <h3><?= $usuario->nombre ?> <?= $usuario->apellido ?></h3>
+                        <h3><?= $perfil["NombreUsu"] ?> <?= $perfil["ApellidoUsu"] ?></h3>
                     </div>
                     <div class="row">
-                        <h4><?= $usuario->edad ?></h4>
+                        <h4><?= $perfil["EdadUsu"] ?></h4>
                     </div>
                     <div class="row">
                         <div class="col"></div>
                         <div class="col">
                             <?php 
 
-                                if(!empty($usuario->funcion) && 2 < count($usuario->funcion)):
+                                if(!empty($funciones) && 2 < count($funciones)):
 
                             ?>
 
@@ -100,11 +134,11 @@
 
                                 <?php 
 
-                                        for($i = 0 ; (empty($usuario->funcion)) | $i < count($usuario->funcion); $i++): 
+                                        for($i = 0 ; (empty($funciones)) | $i < count($funciones); $i++): 
 
                                 ?>
 
-                                        <option disabled><?= $usuario->funcion[$i] ?></option>
+                                        <option disabled><?= $funciones[$i] ?></option>
 
                                 <?php 
                                         endfor ; 
@@ -114,12 +148,12 @@
 
                             <?php
 
-                                elseif(!empty($usuario->funcion) && 2 >= count($usuario->funcion)):
+                                elseif(!empty($funciones) && 2 >= count($funciones)):
 
-                                    for($i = 0 ; (empty($usuario->funcion)) | $i < count($usuario->funcion); $i++): 
+                                    for($i = 0 ; (empty($funciones)) | $i < count($funciones); $i++): 
                             ?>
 
-                                        <h4><?=$usuario->funcion[$i]?></h4>
+                                        <h4><?=$funciones[$i]?></h4>
 
                             <?php
                                     endfor ; 
@@ -132,39 +166,13 @@
 
                 </div>
 
-                <div class="row mb-5 text-center">
-
-                    <div class="col"></div>
-                    <div class="col p-4">
-                        <a href="./portfolioAdd.php"><button class="btn btn-success">Añadir Publicación</button></a>
-                    </div>
-                    <div class="col p-4">
-
-                        <form action="/subpages/profileEdit.php" method="get">
-                            <input type="hidden" name="id" value="<?= htmlspecialchars($usuario->id) ?>">
-                            <input type="hidden" name="nombre" value="<?= htmlspecialchars($usuario->nombre) ?>">
-                            <input type="hidden" name="apellido" value="<?= htmlspecialchars($usuario->apellido) ?>">
-                            <input type="hidden" name="imagen" value="<?= htmlspecialchars( ($usuario->perfil)?($usuario->perfil):"") ?>">
-                            <input type="hidden" name="descripcion" value="<?= htmlspecialchars( $usuario->descripcion) ?>">
-                            <input type="hidden" name="correo" value="<?= htmlspecialchars( $usuario->correo) ?>">
-                            <input type="hidden" name="edad" value="<?= htmlspecialchars( $usuario->edad) ?>">
-                            <?php if(!empty($usuario->funcion)):?>
-                                <input type="hidden" name="funcion" value="<?= htmlspecialchars( implode(",", $usuario->funcion)) ?>">
-                            <?php endif; ?>
-                            <button class="btn btn-warning">Editar Perfil</button>
-                        </form>
-                    </div>
-                    <div class="col"></div>
-
-                </div>
-
             </div>
 
             <div class="col-9">
 
                 <?php 
 
-                    if($usuario->descripcion):
+                    if($perfil["Descripcion"]):
 
                 ?>
 
@@ -175,7 +183,7 @@
                         <div class="col-8">
                             <!-- main -->
                             <div class="card bg-purple">
-                                    <p class="m-4 text-center"><?= $usuario->descripcion ?></p>
+                                    <p class="m-4 text-center"><?= $perfil["Descripcion"] ?></p>
                             </div>
                         </div>
                         <div class="col-2"></div>
@@ -211,23 +219,7 @@
                                 <div class="row">
                                     <div class="col-1"></div>
                                     <div class="mt-5 col-6">
-                                        <h4><?= $publicaciones[$i]["TituloPublic"] ?></h4>
-                                    </div>
-                                    <div class="mt-5 col-2">
-                                        <form action="/subpages/portfolioEdit.php" method="get">
-                                            <input type="hidden" name="id" value="<?= htmlspecialchars($publicaciones[$i]["IdPublic"]) ?>">
-                                            <input type="hidden" name="titulo" value="<?= htmlspecialchars($publicaciones[$i]["TituloPublic"]) ?>">
-                                            <input type="hidden" name="contenido" value="<?= htmlspecialchars($publicaciones[$i]["TextoPublic"]) ?>">
-                                            <input type="hidden" name="imagen" value="<?= htmlspecialchars($publicaciones[$i]["ImagenPublic"]) ?>">
-                                            <button class="btn btn-warning">Editar</button>
-                                        </form>
-                                    </div>
-                                    <div class="mt-5 col-2">
-                                    <form action="/subpages/portfolioDelete.php" method="get">
-                                        <input type="hidden" name="id" value="<?= htmlspecialchars($publicaciones[$i]["IdPublic"]) ?>">
-                                        <button class="btn btn-danger">Eliminar</button>
-                                    </form>
-
+                                        <h4><?= $publicaciones[0][$i]["TituloPublic"] ?></h4>
                                     </div>
                                     <div class="col-1"></div>
                                 </div>
@@ -235,16 +227,16 @@
                                 <div class="row text-center">
                                     <div class="col-1"></div>
                                     <div class="col-10">
-                                    <p class="m-4"><?= $publicaciones[$i]["TextoPublic"] ?></p>
+                                    <p class="m-4"><?= $publicaciones[0][$i]["TextoPublic"] ?></p>
                                     </div>
                                     <div class="col-1"></div>
                                 </div>
 
-                                <?php if($publicaciones[$i]["ImagenPublic"]): ?>
+                                <?php if($publicaciones[0][$i]["ImagenPublic"]): ?>
 
                                     <div class="row pb-3 text-center">
                                         <div class="col">
-                                            <img class="pub-image" src="<?= $publicaciones[$i]["ImagenPublic"] ?>" alt="">
+                                            <img class="pub-image" src="<?= $publicaciones[0][$i]["ImagenPublic"] ?>" alt="">
                                         </div>
                                     </div>
 
@@ -261,7 +253,7 @@
 
                     endif;
 
-                    if((empty($publicaciones))&&!($usuario->descripcion)):
+                    if((empty($publicaciones))&&!($perfil["Descripcion"])):
 
                 ?>
 

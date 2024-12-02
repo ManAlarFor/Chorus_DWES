@@ -134,7 +134,7 @@
                     <div class="detail p-2">
                         <div class="detail-images"><img class="img-fluid rounded-circle" src="<?= ($datos[$i]["PerfilUsu"])?$datos[$i]["PerfilUsu"]:"/assets/img/defaultProfile.jpg" ?>" alt="Picture"></div>
                         <form action="./foreignProfile.php" method="post" id="form-<?= htmlspecialchars($datos[$i]['IdUsu']) ?>">
-                            <input type="hidden" name="pagina" value="<?= htmlspecialchars($datos[$i]['IdUsu']) ?>">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars($datos[$i]['IdUsu']) ?>">
                             <h3 style="cursor: pointer;" onclick="document.getElementById('form-<?= htmlspecialchars($datos[$i]['IdUsu']) ?>').submit();">
                                 <?= $datos[$i]['NombreUsu'] ?> <?= $datos[$i]['ApellidoUsu'] ?>
                             </h3>
