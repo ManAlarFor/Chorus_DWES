@@ -18,15 +18,7 @@
     $pagina = (isset($_POST["pagina"]))?$_POST["pagina"]:1;
     $offset = ($pagina - 1) * 6;
 
-    if((empty($_POST["busqueda"]))&&(!isset($_POST["usuario"]) || ($_POST["usuario"]==""))):
-
-        $sql = "SELECT IdUsu, NombreUsu, ApellidoUsu, PerfilUsu, Descripcion FROM Usuario
-                WHERE NOT NombreUsu = '{$usuario->nombre}' AND NOT ApellidoUsu = '{$usuario->apellido}'
-                LIMIT 6 OFFSET $offset" ;
-
-        $cant = "SELECT (count(*))/6 as 'total' FROM Usuario" ;
-
-    elseif(!empty($_POST)):
+    if(!empty($_POST)):
 
         $busqueda = (isset($_POST["usuario"]))?$_POST["usuario"]:$_POST["busqueda"] ;
         $busqueda = $sqli->real_escape_string($busqueda) ;
@@ -37,6 +29,15 @@
 
         $cant = "SELECT (count(*))/6 as 'total' FROM Usuario
                 WHERE (lower(NombreUsu) LIKE lower('%{$busqueda}%') OR lower(ApellidoUsu) LIKE lower('%{$busqueda}%')) AND (NOT NombreUsu = '{$usuario->nombre}' AND NOT ApellidoUsu = '{$usuario->apellido}')" ;
+
+
+    else:
+
+            $sql = "SELECT IdUsu, NombreUsu, ApellidoUsu, PerfilUsu, Descripcion FROM Usuario
+            WHERE NOT NombreUsu = '{$usuario->nombre}' AND NOT ApellidoUsu = '{$usuario->apellido}'
+            LIMIT 6 OFFSET $offset" ;
+
+            $cant = "SELECT (count(*))/6 as 'total' FROM Usuario" ;
 
     endif;
 
@@ -113,7 +114,16 @@
 
             <?php 
 
-            if(!empty($datos)): 
+            if(empty($datos)):
+
+            ?>
+
+                <h1 class="mt-5 text-center">No hay usuarios con esas caracteristicas</h1>
+
+            <?php
+
+            else:
+
                 for($i = 0 ; $i < count($datos); $i++):
 
             ?>
@@ -121,10 +131,15 @@
                 <div class="col">
 
                 <div class="card">
-                    <div class="detail">
+                    <div class="detail p-2">
                         <div class="detail-images"><img class="img-fluid rounded-circle" src="<?= ($datos[$i]["PerfilUsu"])?$datos[$i]["PerfilUsu"]:"/assets/img/defaultProfile.jpg" ?>" alt="Picture"></div>
-                        <h3><?= $datos[$i]["NombreUsu"] ?> <?= $datos[$i]["ApellidoUsu"] ?></h3>
-                        <p><?= $datos[$i]["Descripcion"] ?></p>
+                        <form action="./foreignProfile.php" method="post" id="form-<?= htmlspecialchars($datos[$i]['IdUsu']) ?>">
+                            <input type="hidden" name="pagina" value="<?= htmlspecialchars($datos[$i]['IdUsu']) ?>">
+                            <h3 style="cursor: pointer;" onclick="document.getElementById('form-<?= htmlspecialchars($datos[$i]['IdUsu']) ?>').submit();">
+                                <?= $datos[$i]['NombreUsu'] ?> <?= $datos[$i]['ApellidoUsu'] ?>
+                            </h3>
+                            <p><?= $datos[$i]['Descripcion'] ?></p>
+                        </form>
                     </div>
                 </div>
 
@@ -137,7 +152,7 @@
             ?>
             </div>
 
-            <div class="row">
+            <div class="row mt-2 mb-5">
 
                 <div class="col"></div>
                 <div class="col">
@@ -161,7 +176,7 @@
 
                         <li class="page-item"><a class="page-link bg-input"><?= $pagina ?></a></li>
 
-                        <?php if($pagina != $total): ?>
+                        <?php if(($pagina != $total) && (!empty($datos))): ?>
                             <li class="page-item ">
                                 <form action="./search.php" method="POST">
                                     <button class="page-link bg-input">
