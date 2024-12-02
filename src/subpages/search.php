@@ -1,4 +1,5 @@
 <?php 
+
     session_start(); // Inicializa la sesión
     require_once "../classes/Usuario.php" ;
 
@@ -14,27 +15,28 @@
 
     }
 
-    $pagina = (isset($_GET["pagina"]))?$_GET["pagina"]:1;
+    $pagina = (isset($_POST["pagina"]))?$_POST["pagina"]:1;
     $offset = ($pagina - 1) * 6;
 
-
-
-    if(!isset($_POST["usuario"])):
-
+    if((empty($_POST["busqueda"]))&&(!isset($_POST["usuario"]) || ($_POST["usuario"]==""))):
 
         $sql = "SELECT IdUsu, NombreUsu, ApellidoUsu, PerfilUsu, Descripcion FROM Usuario
-                WHERE NOT NombreUsu = '{$usuario->nombre}'
+                WHERE NOT NombreUsu = '{$usuario->nombre}' AND NOT ApellidoUsu = '{$usuario->apellido}'
                 LIMIT 6 OFFSET $offset" ;
 
         $cant = "SELECT (count(*))/6 as 'total' FROM Usuario" ;
 
     elseif(!empty($_POST)):
 
-        $busqueda = $_POST["usuario"] ;
+        $busqueda = (isset($_POST["usuario"]))?$_POST["usuario"]:$_POST["busqueda"] ;
         $busqueda = $sqli->real_escape_string($busqueda) ;
 
-        $sql = "SELECT IdUsu, NombreUsu, ApellidoUsu, PerfilUsu FROM Usuario
-                WHERE NOT NombreUsu = '{$usuario->nombre}'" ;
+        $sql = "SELECT IdUsu, NombreUsu, ApellidoUsu, PerfilUsu, Descripcion FROM Usuario
+                WHERE (lower(NombreUsu) LIKE lower('%{$busqueda}%') OR lower(ApellidoUsu) LIKE lower('%{$busqueda}%')) AND (NOT NombreUsu = '{$usuario->nombre}' AND NOT ApellidoUsu = '{$usuario->apellido}')
+                LIMIT 6 OFFSET $offset" ;
+
+        $cant = "SELECT (count(*))/6 as 'total' FROM Usuario
+                WHERE (lower(NombreUsu) LIKE lower('%{$busqueda}%') OR lower(ApellidoUsu) LIKE lower('%{$busqueda}%')) AND (NOT NombreUsu = '{$usuario->nombre}' AND NOT ApellidoUsu = '{$usuario->apellido}')" ;
 
     endif;
 
@@ -48,7 +50,7 @@
 
     $total = $total["total"] ;
 
-    $total = round($total) ;
+    $total = ceil($total) ;
 
 
 ?>
@@ -89,7 +91,7 @@
                             <label for="usuario" class="form-label">Usuario a buscar:</label>
                         </div>
                         <div class="row">
-                            <input type="text" class="form-control bg-input" id="usuario" name="usuario" required>
+                            <input type="text" class="form-control bg-input" id="usuario" name="usuario">
                         </div>
                         <div class="row">
                             <div class="col"></div>
@@ -146,9 +148,10 @@
 
                             <li class="page-item">
 
-                                <form action="./search.php">
+                                <form action="./search.php" method="POST">
                                     <button class="page-link bg-input">
                                         <input type="hidden" name="pagina" value="<?= htmlspecialchars(($pagina-1)) ?>">
+                                        <input type="hidden" name="busqueda" value="<?= htmlspecialchars(($busqueda)) ?>">
                                         <span aria-hidden="true">&laquo;</span>
                                     </button>
                                 </form>
@@ -160,9 +163,10 @@
 
                         <?php if($pagina != $total): ?>
                             <li class="page-item ">
-                                <form action="./search.php" method="get">
+                                <form action="./search.php" method="POST">
                                     <button class="page-link bg-input">
                                         <input type="hidden" name="pagina" value="<?= htmlspecialchars(($pagina+1)) ?>">
+                                        <input type="hidden" name="busqueda" value="<?= htmlspecialchars(($busqueda)) ?>">
                                         <span aria-hidden="true">&raquo;</span>
                                     </button>
                                 </form>
