@@ -214,9 +214,6 @@
                             <p>Los campos deben estar completos</p>
                         </div>
 
-                        <div class="row text-center">
-                            <p>¿Tienes cuenta? Haz click <a href="./login.php">aquí</a>.</p>
-                        </div>
                     </div>
                 </div>
             </div>

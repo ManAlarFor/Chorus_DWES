@@ -6,13 +6,17 @@
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
+            <?php if(!empty($_SESSION)): ?>
+
             <li class="nav-item">
 
-                <a class="nav-link" href="#" id="navbar" role="button" data-bs-toggle="" aria-expanded="false">
+                <a class="nav-link" href="/subpages/search.php" id="navbar" role="button" data-bs-toggle="" aria-expanded="false">
                     <i class="bi bi-search"></i>
                 </a>
 
             </li>
+
+            <?php endif ; ?>
 
             <li class="profile-pic">
                 <a class="nav-link" href="/"><img src="/assets/img/chorusIcon.png" alt=""></a>

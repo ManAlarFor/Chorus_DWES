@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: chorus_web
+    ports:
+      - "7070:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db
+  
+  db:
+    image: mariadb:latest
+    container_name: chorus_db
+    environment:
+      MYSQL_DATABASE: chorus_db
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - "5000:4000"
+  
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: chorus_phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+    depends_on:
+      - db
+    ports:
+      - "7071:80"

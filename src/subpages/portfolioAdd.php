@@ -67,7 +67,7 @@ endif;
 
 <div class="card position-absolute top-50 start-50 translate-middle"  style="width: 40rem;">
     <div class="card-header bg-titulo text-center">
-        <h1>CHORUS</h1>
+        <h1>CHORUS - AÑADIR</h1>
     </div>
     <form action="portfolioAdd.php" method="post" class="p-5 bg-clarito">
 
