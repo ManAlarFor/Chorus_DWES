@@ -166,7 +166,7 @@
                                 <form action="./search.php" method="POST">
                                     <button class="page-link bg-input">
                                         <input type="hidden" name="pagina" value="<?= htmlspecialchars(($pagina-1)) ?>">
-                                        <input type="hidden" name="busqueda" value="<?= htmlspecialchars(($busqueda)) ?>">
+                                        <input type="hidden" name="busqueda" value="<?= htmlspecialchars(isset($busqueda)?$busqueda:"") ?>">
                                         <span aria-hidden="true">&laquo;</span>
                                     </button>
                                 </form>
@@ -181,7 +181,7 @@
                                 <form action="./search.php" method="POST">
                                     <button class="page-link bg-input">
                                         <input type="hidden" name="pagina" value="<?= htmlspecialchars(($pagina+1)) ?>">
-                                        <input type="hidden" name="busqueda" value="<?= htmlspecialchars(($busqueda)) ?>">
+                                        <input type="hidden" name="busqueda" value="<?= htmlspecialchars(isset($busqueda)?$busqueda:"") ?>">
                                         <span aria-hidden="true">&raquo;</span>
                                     </button>
                                 </form>

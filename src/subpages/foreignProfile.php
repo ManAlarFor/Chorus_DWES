@@ -122,11 +122,11 @@
                         <div class="col">
                             <?php 
 
-                                if(!empty($funciones) && 2 < count($funciones)):
+                                if(!empty($funciones)):
 
                             ?>
 
-                                <label for="funciones">Ver funciones</label>
+                                <label class="m-2" for="funciones">Funciones:</label>
 
                                 <select id="funciones" name="funciones">
 
@@ -142,23 +142,10 @@
 
                                 <?php 
                                         endfor ; 
+                                    endif ;
                                 ?>
 
                                 </select>
-
-                            <?php
-
-                                elseif(!empty($funciones) && 2 >= count($funciones)):
-
-                                    for($i = 0 ; (empty($funciones)) | $i < count($funciones); $i++): 
-                            ?>
-
-                                        <h4><?=$funciones[$i]?></h4>
-
-                            <?php
-                                    endfor ; 
-                                endif ;
-                            ?>
 
                         </div>
                         <div class="col"></div>
