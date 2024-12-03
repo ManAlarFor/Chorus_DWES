@@ -1,6 +1,6 @@
 <?php 
     session_start(); // Inicializa la sesión
-    require_once "../classes/Usuario.php" ;
+    require_once "../../classes/Usuario.php"; ;
 
     $usuario = unserialize($_SESSION["_usuario"]) ;
 
@@ -16,6 +16,7 @@
 
     }
 
+    // Obtencion de datos del usuario
     $sql = "SELECT IdPublic, TituloPublic, TextoPublic, ImagenPublic FROM portfolio
             WHERE IdUsu = '{$usuario->id}'" ;
 
@@ -44,10 +45,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chorus - <?= $usuario->nombre ?> <?= $usuario->apellido ?> Profile</title>
 
-    <link rel="stylesheet" href="../assets/css/fonts.css">
-    <link rel="stylesheet" href="../assets/css/navbar.css">
-    <link rel="stylesheet" href="../assets/css/profile.css">
-    <link rel="shortcut icon" href="../assets/img/chorusIcon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/fonts.css">
+    <link rel="stylesheet" href="/assets/css/navbar.css">
+    <link rel="stylesheet" href="/assets/css/profile.css">
+    <link rel="shortcut icon" href="/assets/img/chorusIcon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -63,6 +64,9 @@
 
     <div class="container-fluid">
         <div class="row">
+
+                <!-- SECCIÓN DE PERFIL -->
+
             <div class="col-3 bg-purple border-purple altura sticky pt-5 pb-5"> 
 
                 <div class="row mt-2 mb-3">
@@ -78,6 +82,8 @@
                 </div>
 
                 <div class="row mb-4 text-center">
+
+                <!-- MOSTRAR DATOS DEL USUARIO -->
 
                     <div class="row">
                         <h3><?= $usuario->nombre ?> <?= $usuario->apellido ?></h3>
@@ -125,11 +131,11 @@
 
                     <div class="col"></div>
                     <div class="col p-4">
-                        <a href="./portfolioAdd.php"><button class="btn btn-success">Añadir Publicación</button></a>
+                        <a href="../dataManagement/portfolioAdd.php"><button class="btn btn-success">Añadir Publicación</button></a>
                     </div>
                     <div class="col p-4">
 
-                        <form action="/subpages/profileEdit.php" method="get">
+                        <form action="../dataManagement/profileEdit.php" method="get">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($usuario->id) ?>">
                             <input type="hidden" name="nombre" value="<?= htmlspecialchars($usuario->nombre) ?>">
                             <input type="hidden" name="apellido" value="<?= htmlspecialchars($usuario->apellido) ?>">
@@ -149,7 +155,11 @@
 
             </div>
 
+            <!-- SECCIÓN DE PUBLICACIONES Y DESCRIPCION -->
+
             <div class="col-9">
+
+                <!-- DESCRIPCION -->
 
                 <?php 
 
@@ -177,6 +187,8 @@
 
                 ?>
 
+                <!-- PUBLICACIONES -->
+
                 <?php 
 
                     if(!empty($publicaciones)):
@@ -203,7 +215,7 @@
                                         <h4><?= $publicaciones[$i]["TituloPublic"] ?></h4>
                                     </div>
                                     <div class="mt-5 col-2">
-                                        <form action="/subpages/portfolioEdit.php" method="get">
+                                        <form action="../dataManagement/portfolioEdit.php" method="get">
                                             <input type="hidden" name="id" value="<?= htmlspecialchars($publicaciones[$i]["IdPublic"]) ?>">
                                             <input type="hidden" name="titulo" value="<?= htmlspecialchars($publicaciones[$i]["TituloPublic"]) ?>">
                                             <input type="hidden" name="contenido" value="<?= htmlspecialchars($publicaciones[$i]["TextoPublic"]) ?>">
@@ -212,7 +224,7 @@
                                         </form>
                                     </div>
                                     <div class="mt-5 col-2">
-                                    <form action="/subpages/portfolioDelete.php" method="get">
+                                    <form action="../dataManagement/portfolioDelete.php" method="get">
                                         <input type="hidden" name="id" value="<?= htmlspecialchars($publicaciones[$i]["IdPublic"]) ?>">
                                         <button class="btn btn-danger">Eliminar</button>
                                     </form>

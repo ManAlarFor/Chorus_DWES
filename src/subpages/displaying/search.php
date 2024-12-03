@@ -1,7 +1,7 @@
 <?php 
 
     session_start(); // Inicializa la sesión
-    require_once "../classes/Usuario.php" ;
+    require_once "../../classes/Usuario.php"; ;
 
     $usuario = unserialize($_SESSION["_usuario"]) ;
 
@@ -18,6 +18,8 @@
     $pagina = (isset($_POST["pagina"]))?$_POST["pagina"]:1;
     $offset = ($pagina - 1) * 6;
 
+
+    // Recibir los datos de los usuarios
     if(!empty($_POST)):
 
         $busqueda = (isset($_POST["usuario"]))?$_POST["usuario"]:$_POST["busqueda"] ;
@@ -42,15 +44,11 @@
     endif;
 
     $datos = $sqli->query($sql) ;
-
     $datos = $datos->fetch_all(MYSQLI_ASSOC) ;
 
     $total = $sqli->query($cant) ;
-
     $total = $total->fetch_assoc() ;
-
     $total = $total["total"] ;
-
     $total = ceil($total) ;
 
 
@@ -62,10 +60,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chorus - Busqueda</title>
 
-    <link rel="stylesheet" href="../assets/css/fonts.css">
-    <link rel="stylesheet" href="../assets/css/navbar.css">
-    <link rel="stylesheet" href="../assets/css/search.css">
-    <link rel="shortcut icon" href="../assets/img/chorusIcon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/fonts.css">
+    <link rel="stylesheet" href="/assets/css/navbar.css">
+    <link rel="stylesheet" href="/assets/css/search.css">
+    <link rel="shortcut icon" href="/assets/img/chorusIcon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -78,8 +76,6 @@
 
         <?php require_once "./navBar.php" ?>
 
-        <!-- SEARCH BUTTON -->
-
         <div class="container">
 
             <form action="./search.php" method="post">
@@ -87,6 +83,8 @@
 
                     <div class="col"></div>
                     <div class="m-5 col">
+
+                    <!-- SEARCH INPUT -->
 
                         <div class="row">
                             <label for="usuario" class="form-label">Usuario a buscar:</label>
@@ -111,6 +109,7 @@
 
             <div class="row">
 
+            <!-- MOSTRANDO LOS USUARIOS -->
 
             <?php 
 
@@ -155,6 +154,9 @@
             <div class="row mt-2 mb-5">
 
                 <div class="col"></div>
+
+                <!-- PAGINACIÓN -->
+
                 <div class="col">
 
                     <ul class="pagination d-flex justify-content-center">

@@ -24,7 +24,7 @@
 
     <!-- NAV BAR -->
 
-    <?php require_once "./subpages/navBar.php" ?>
+    <?php require_once "./subpages/displaying/navBar.php" ?>
 
     <!-- HERO SECTION -->
 

@@ -11,11 +11,12 @@
 
     }
 
+    // Eliminar publicacion
     $sql = "DELETE FROM portfolio
             WHERE IdPublic = {$_GET['id']}" ;        
 
     $sqli->query($sql) ;
 
-    die(header("location: /subpages/profile.php")) ;
+    die(header("location: /subpages/displaying/profile.php")) ;
 
 ?>

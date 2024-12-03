@@ -6,15 +6,19 @@
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
+            <!-- BUSCADOR -->
+
             <?php if(!empty($_SESSION)): ?>
 
             <li class="nav-item">
 
-                <a class="nav-link" href="/subpages/search.php" id="navbar" role="button" data-bs-toggle="" aria-expanded="false">
+                <a class="nav-link" href="/subpages/displaying/search.php" id="navbar" role="button" data-bs-toggle="" aria-expanded="false">
                     <i class="bi bi-search"></i>
                 </a>
 
             </li>
+
+            <!-- ENLACE A PÁGINA PRINCIPAL -->
 
             <?php endif ; ?>
 
@@ -25,9 +29,13 @@
         </ul>
 
 
+        <!-- PROFILE MENU -->
+
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 profile-menu"> 
 
             <li class="nav-item ">
+
+                <!-- LOGGED IN MENU -->
 
             <?php 
 
@@ -45,10 +53,10 @@
                         </div>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/subpages/profile.php"><i class="fas fa-sliders-h fa-fw"></i> Perfil</a></li>
+                        <li><a class="dropdown-item" href="/subpages/displaying/profile.php"><i class="fas fa-sliders-h fa-fw"></i> Perfil</a></li>
                         <li><hr class="dropdown-divider"></li>
 
-                        <form action="/subpages/logOut.php" method="post">
+                        <form action="/subpages/dataManagement/logOut.php" method="post">
                             <li><button class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-fw"></i> Cerrar Sesión</button></li>
                         </form>
 
@@ -62,9 +70,11 @@
 
             ?>
 
-                <a class="nav-link -toggle" href="/subpages/login.php" id="navbar" role="button" data-bs-toggle="" aria-expanded="false">
+                    <!-- DEFAULT PROFILE -->
+
+                <a class="nav-link -toggle" href="/subpages/dataManagement/login.php" id="navbar" role="button" data-bs-toggle="" aria-expanded="false">
                     <div class="profile-pic">
-                        <img id="perfil" class="img-fluid rounded-circle border-purple" src="./assets/img/defaultProfile.jpg" id="navbar" role="button" alt="Default Profile">
+                        <img id="perfil" class="img-fluid rounded-circle border-purple" src="/assets/img/defaultProfile.jpg" id="navbar" role="button" alt="Default Profile">
                     </div>
                 </a>
 

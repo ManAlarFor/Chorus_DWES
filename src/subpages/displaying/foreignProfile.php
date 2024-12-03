@@ -1,6 +1,6 @@
 <?php 
     session_start(); // Inicializa la sesión
-    require_once "../classes/Usuario.php" ;
+    require_once "../../classes/Usuario.php"; ;
 
     $usuario = unserialize($_SESSION["_usuario"]) ;
 
@@ -16,6 +16,7 @@
 
     }
 
+    // Se recogen los datos del usuario
     if(isset($_POST["id"])):
 
         $sql = "SELECT NombreUsu, ApellidoUsu, CorreoUsu, PerfilUsu, EdadUsu, Descripcion FROM Usuario 
@@ -76,9 +77,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chorus - Perfil de <?= $perfil["NombreUsu"] ?> <?= $perfil["ApellidoUsu"] ?></title>
 
-    <link rel="stylesheet" href="../assets/css/fonts.css">
-    <link rel="stylesheet" href="../assets/css/navbar.css">
-    <link rel="stylesheet" href="../assets/css/profile.css">
+    <link rel="stylesheet" href="/assets/css/fonts.css">
+    <link rel="stylesheet" href="/assets/css/navbar.css">
+    <link rel="stylesheet" href="/assets/css/profile.css">
     <link rel="shortcut icon" href="/assets/img/chorusIcon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -95,6 +96,9 @@
 
     <div class="container-fluid">
         <div class="row">
+
+            <!-- SECCION DE DATOS DEL USUARIO -->
+
             <div class="col-3 bg-purple border-purple altura sticky pt-5 pb-5"> 
 
                 <div class="row mt-2 mb-3">
@@ -120,6 +124,9 @@
                     <div class="row">
                         <div class="col"></div>
                         <div class="col">
+
+                            <!-- Funciones del usuario -->
+
                             <?php 
 
                                 if(!empty($funciones)):
@@ -155,7 +162,11 @@
 
             </div>
 
+            <!-- SECCIÓN DE DESCRIPCION Y PUBLICACIONES -->
+
             <div class="col-9">
+
+                <!-- DESCRIPCION -->
 
                 <?php 
 
@@ -182,6 +193,8 @@
                     endif;
 
                 ?>
+
+                <!-- PUBLICACIONES -->
 
                 <?php 
 

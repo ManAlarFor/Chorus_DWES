@@ -23,6 +23,7 @@
 
         }
 
+        // Busqueda del usuario
         $correo     = $sqli->real_escape_string($correo) ;
         $contrasena = $sqli->real_escape_string($contrasena) ;
         $sql = "SELECT IdUsu, NombreUsu, ApellidoUsu, CorreoUsu, PerfilUsu, EdadUsu, Descripcion FROM Usuario 
@@ -32,7 +33,7 @@
 
         if ($datos->num_rows > 0):
 
-            require_once "../classes/Usuario.php";
+            require_once "../../classes/Usuario.php";
             $usuario_data = $datos->fetch_assoc();
 
             $usuario = new Usuario(
@@ -49,6 +50,7 @@
                     WHERE IdUsu = '{$usuario->id}';" ;     
         $result = $sqli->query($sql);
 
+        // Buscar las funciones del usuario
         if ($result && $result->num_rows > 0) {
             $result = $result->fetch_all(MYSQLI_NUM);
             $idFun = $result;
@@ -74,6 +76,7 @@
 
             $sqli->close() ;
 
+            // Guardar datos
             $_SESSION["_usuario"] = serialize($usuario) ;
 
             die(header("location: /")) ;
@@ -91,9 +94,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chorus - LogIn</title>
 
-    <link rel="stylesheet" href="../assets/css/login.css">
-    <link rel="stylesheet" href="../assets/css/fonts.css">
-    <link rel="shortcut icon" href="../assets/img/chorusIcon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/login.css">
+    <link rel="stylesheet" href="/assets/css/fonts.css">
+    <link rel="shortcut icon" href="/assets/img/chorusIcon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -106,6 +109,8 @@
         <div class="card-header bg-titulo text-center">
             <h1>CHORUS - LOGIN</h1>
         </div>
+
+        <!-- FORMULARIO DE INICIO DE SESION -->
         <form action="login.php" method="post" class="p-5 bg-clarito">
             <div class="mb-3">
                 <label for="correo" class="form-label">Correo</label>
@@ -123,9 +128,13 @@
                 </div>
                 <div class="col"></div>
             </div>
+
+            <!-- CONTROL DE ERRORES -->
             <div class="row text-center text-danger <?= $visible ?>">
                 <p>El usuario buscado no existe</p>
             </div>
+
+            <!-- ENLACE A SIGNIN -->
             <div class="row text-center">
                 <p>¿No tienes cuenta? Haz click <a href="./signin.php">aquí</a>.</p>
             </div>

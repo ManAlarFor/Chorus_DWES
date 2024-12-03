@@ -1,9 +1,6 @@
 <?php 
 
     session_start() ;
-    require_once "../classes/Usuario.php" ;
-
-    $usuario = unserialize($_SESSION["_usuario"]) ;
 
     $visible = "d-none" ;
 
@@ -17,41 +14,47 @@
 
     }
 
-    if(!empty($_POST)):
+    if(!empty($_SESSION)):
 
-        $id         = $_POST["id"] ;
+        die(header("location: /")) ;
+
+    elseif(!empty($_POST)):
+
         $correo     = $_POST["correo"] ;
+        $contrasena = $_POST["passwd"] ;
         $imagen     = $_POST["imagen"] ;
         $nombre     = $_POST["nombre"] ;
         $apellido   = $_POST["apellido"] ;
         $edad       = $_POST["edad"] ;
         $descrip    = $_POST["descrip"] ;
-        $funcion    = $_POST["funcion"] ;
+        $funcion  = $_POST["funcion"] ;
 
-        if( $correo && $nombre && $edad && $apellido):
+        if( $correo && $contrasena && $nombre && $edad && $apellido):
 
-            $finalImagen = (isset($imagen))?$imagen:null;
-            $finalDescrip = (isset($descrip))?($sqli->real_escape_string($descrip)):Null;
-
-            $correo     = $sqli->real_escape_string($correo) ;
-            $nombre = $sqli->real_escape_string($nombre) ;
-            $apellido = $sqli->real_escape_string($apellido) ;
-            $edad = $sqli->real_escape_string($edad) ;
-            $sql = "UPDATE Usuario
-                    SET NombreUsu = '{$nombre}', ApellidoUsu = '{$apellido}', EdadUsu = '{$edad}', CorreoUsu = '{$correo}' ,PerfilUsu = '{$finalImagen}', Descripcion ='{$descrip}'
-                    WHERE IdUsu = '{$id}'" ;        
-
-            $sqli->query($sql) ;
-            
-            $sql = "DELETE FROM usuario_funcion 
-                    WHERE IdUsu = '{$id}'" ;
-            $sqli->query($sql) ;
-            if(!empty($funcion)):
+        $finalImagen = (isset($imagen))?$imagen:null;
+        $finalDescrip = (isset($descrip))?($sqli->real_escape_string($descrip)):Null;
 
 
-                $usuario->setFuncion(null) ;
+        // Insertar los datos del usuario
+        $correo     = $sqli->real_escape_string($correo) ;
+        $contrasena = $sqli->real_escape_string($contrasena) ;
+        $nombre = $sqli->real_escape_string($nombre) ;
+        $apellido = $sqli->real_escape_string($apellido) ;
+        $edad = $sqli->real_escape_string($edad) ;
+        $sql = "INSERT INTO Usuario(NombreUsu, ApellidoUsu, EdadUsu, CorreoUsu, ContrasenaUsu, PerfilUsu, Descripcion)
+                VALUES ('{$nombre}', '{$apellido}', '{$edad}', '{$correo}', '{$contrasena}', '{$finalImagen}', '{$finalDescrip}');" ;        
 
-                for($i = 0 ; $i < count($funcion) ; $i++):
+        $sqli->query($sql) ;
+
+        if (is_array($funcion)&&!empty($funcion)&&!($funcion[0]=="")):
+                $sql = "SELECT IdUsu FROM Usuario
+                        WHERE NombreUsu = '{$nombre}'" ;
+
+                $idUsu = $sqli->query(($sql)) ;
+                
+                $idUsu = $idUsu->fetch_assoc() ;
+
+                for($i = 0 ; $i < count($funcion) ; $i++) :
 
                     $sql = "SELECT IdFuncion FROM Funcion
                             WHERE NombreFuncion = '{$funcion[$i]}'" ;
@@ -61,25 +64,15 @@
                     $idFun = $idFun->fetch_assoc() ;
 
                     $sql = "INSERT INTO usuario_funcion
-                            VALUES ('{$id}', '{$idFun['IdFuncion']}')" ;
+                            VALUES ('{$idUsu['IdUsu']}', '{$idFun['IdFuncion']}')" ;
 
                     $sqli->query(($sql)) ;
 
                 endfor ;
 
-            endif ;
+                endif ;
 
-            $usuario->setNombre($nombre) ;
-            $usuario->setApellido($apellido) ;
-            $usuario->setCorreo($correo) ;
-            $usuario->setEdad($edad) ;
-            $usuario->setDescripcion($finalDescrip) ;
-            $usuario->setPerfil($finalImagen) ;
-            $usuario->setFuncion($funcion) ;
-
-            $_SESSION["_usuario"] = serialize($usuario) ;
-
-            header("location: /subpages/login.php") ;
+            die(header("location: /subpages/dataManagement/login.php")) ;
 
         endif ;
 
@@ -97,23 +90,17 @@
 
     endif;
 
-    if(isset($_GET["funcion"])): 
-
-        $funcionUsuario = explode(",",$_GET["funcion"]) ;
-        
-    endif; 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chorus - Editar Perfil</title>
+    <title>Chorus - Sign In</title>
 
-    <link rel="stylesheet" href="../assets/css/login.css">
-    <link rel="stylesheet" href="../assets/css/fonts.css">
-    <link rel="shortcut icon" href="../assets/img/chorusIcon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/login.css">
+    <link rel="stylesheet" href="/assets/css/fonts.css">
+    <link rel="shortcut icon" href="/assets/img/chorusIcon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -124,9 +111,11 @@
 
     <div class="card position-absolute top-50 start-50 translate-middle"  style="width: 60rem;">
         <div class="card-header bg-titulo text-center">
-            <h1>CHORUS - EDITAR PERFIL</h1>
+            <h1>CHORUS - SIGN IN</h1>
         </div>
-        <form action="profileEdit.php" method="post" class="p-3 bg-clarito">
+
+        <!-- FORMULARIO DE AÑADIR USUARIO -->
+        <form action="./signin.php" method="post" class="p-3 bg-clarito">
 
             <div class="container">
                 <div class="row">
@@ -136,27 +125,22 @@
 
                             <div class="col">
 
-                                <input type="hidden" name="id" value="<?= htmlspecialchars($_GET['id']) ?>">
-
-
                                 <div class="mb-3">
                                     <label for="correo" class="form-label">Correo</label>
-                                    <input type="email" value="<?= $_GET["correo"] ?>" class="form-control bg-input" id="correo" name="correo">
+                                    <input type="email" class="form-control bg-input" id="correo" name="correo">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="passwd" class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control bg-input" id="passwd" name="passwd">
                                 </div>
                                 <div class="mb-3">
                                     <label for="imagen" class="form-label">Imagen (Opcional)</label>
-                                    <input type="text" value="<?= ($_GET["imagen"])?$_GET["imagen"]:"" ?>" class="form-control bg-input" id="imagen" name="imagen">
+                                    <input type="text" class="form-control bg-input" id="imagen" name="imagen">
                                 </div>
-
-                                <div class="mb-3">
-                                    <label for="edad" class="form-label">Edad</label>
-                                    <input type="number" value="<?= $_GET["edad"] ?>" class="form-control bg-input" id="edad" name="edad">
-                                </div>
-
                                 <div class="mb-3">
                                     <label for="funcion[]" class="form-label">Función</label>
                                     <select class="w-100" class="bg-input" id="funcion" name="funcion[]" multiple>
-                                        <option <?= (!isset($funcionUsuario))?"selected":"" ?> value="">Ningún Papel</option>
+                                        <option selected value="">Ningún Papel</option>
 
                                         <?php 
 
@@ -164,9 +148,10 @@
 
                                         ?>
 
-                                        <option <?= (isset($funcionUsuario) && in_array($funciones[$i][0], $funcionUsuario))?"selected":"" ?> value="<?= $funciones[$i][0] ?>"><?= $funciones[$i][0] ?></option>
+                                        <option value="<?= $funciones[$i][0] ?>"><?= $funciones[$i][0] ?></option>
 
                                         <?php 
+
 
                                             endfor ;
 
@@ -182,11 +167,15 @@
                                 
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" value="<?= $_GET["nombre"] ?>" class="form-control bg-input" id="nombre" name="nombre">
+                                    <input type="text" class="form-control bg-input" id="nombre" name="nombre">
                                 </div>
                                 <div class="mb-3">
                                     <label for="apellido" class="form-label">Apellidos</label>
-                                    <input type="text" value="<?= $_GET["apellido"] ?>" class="form-control bg-input" id="apellido" name="apellido">
+                                    <input type="text" class="form-control bg-input" id="apellido" name="apellido">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edad" class="form-label">Edad</label>
+                                    <input type="number" class="form-control bg-input" id="edad" name="edad">
                                 </div>
                                 <div class="mb-3">
 
@@ -194,7 +183,7 @@
                                         <label class="form-label" for="descrip">Descripción (Opcional)</label>
                                     </div>
                                     <div class="row">
-                                        <textarea class="bg-input" name="descrip" id="descrip" rows="7" cols="15"><?= ($_GET["descripcion"])?$_GET["descripcion"]:"" ?></textarea>
+                                        <textarea class="bg-input" name="descrip" id="descrip" rows="3" cols="15"></textarea>
                                     </div>
 
                                 </div>
@@ -214,6 +203,9 @@
                             <p>Los campos deben estar completos</p>
                         </div>
 
+                        <div class="row text-center">
+                            <p>¿Tienes cuenta? Haz click <a href="./login.php">aquí</a>.</p>
+                        </div>
                     </div>
                 </div>
             </div>
