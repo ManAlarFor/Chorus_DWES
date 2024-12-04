@@ -75,7 +75,7 @@
 
             <div class="col-3 bg-purple border-purple altura sticky pt-5 pb-5"> 
 
-                <div class="row mt-2 mb-3">
+                <div class="row">
 
                     <div class="col"></div>
                     <div class="col">
@@ -87,7 +87,7 @@
 
                 </div>
 
-                <div class="row mb-4 text-center">
+                <div class="row mb-2 text-center">
 
                 <!-- MOSTRAR DATOS DEL USUARIO -->
 
@@ -106,7 +106,7 @@
 
                             ?>
 
-                                <label class="m-2" for="funciones">Funciones:</label>
+                                <label class="m-1" for="funciones">Funciones:</label>
 
                                 <select id="funciones" name="funciones">
 
@@ -133,7 +133,7 @@
 
                 </div>
 
-                <div class="row mb-5 text-center">
+                <div class="row text-center">
 
                     <div class="col"></div>
                     <div class="col p-4">
@@ -158,7 +158,17 @@
                     <div class="col"></div>
 
                 </div>
+                <div class="row text-center">
 
+                    <div class="col"></div>
+                    <div class="col">
+
+                        <a href="../dataManagement/profileDelete.php"><button class="btn btn-danger">Eliminar Cuenta</button></a>
+
+                    </div>
+                    <div class="col"></div>
+
+                </div>
             </div>
 
             <!-- SECCIÓN DE PUBLICACIONES Y DESCRIPCION -->
