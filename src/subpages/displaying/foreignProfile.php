@@ -1,4 +1,5 @@
 <?php 
+
     session_start(); // Inicializa la sesión
     require_once "../../classes/Usuario.php"; ;
 

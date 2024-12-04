@@ -79,6 +79,7 @@
 
             // Guardar datos
             $_SESSION["_usuario"] = serialize($usuario) ;
+            $_SESSION["_tiempo"]  = time() + 120 ;
 
             die(header("location: /")) ;
         endif ;

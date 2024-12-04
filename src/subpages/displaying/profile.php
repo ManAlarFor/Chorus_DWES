@@ -2,6 +2,12 @@
     session_start(); // Inicializa la sesión
     require_once "../../classes/Usuario.php"; ;
 
+    if ((empty($_SESSION)) || 
+        (time() >= $_SESSION["_tiempo"])):            
+            $_SESSION = [] ;
+            die(header("location: ../dataManagement/logOut.php")) ;
+    endif ;
+
     $usuario = unserialize($_SESSION["_usuario"]) ;
 
     $publicaciones = [] ;

@@ -44,7 +44,7 @@ if(!empty($_POST)):
 
         $sqli->query($sql) ;
 
-        die(header("location: /subpages/profile.php")) ;
+        die(header("location: /subpages/displaying/profile.php")) ;
 
     endif ;
 
