@@ -37,6 +37,7 @@
 
         // Insertar los datos del usuario
         $correo     = $sqli->real_escape_string($correo) ;
+        $contrasena = md5($contrasena) ;
         $contrasena = $sqli->real_escape_string($contrasena) ;
         $nombre = $sqli->real_escape_string($nombre) ;
         $apellido = $sqli->real_escape_string($apellido) ;

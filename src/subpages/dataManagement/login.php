@@ -25,6 +25,7 @@
 
         // Busqueda del usuario
         $correo     = $sqli->real_escape_string($correo) ;
+        $contrasena = md5($contrasena) ;
         $contrasena = $sqli->real_escape_string($contrasena) ;
         $sql = "SELECT IdUsu, NombreUsu, ApellidoUsu, CorreoUsu, PerfilUsu, EdadUsu, Descripcion FROM Usuario 
                 WHERE CorreoUsu = '{$correo}' AND ContrasenaUsu = '{$contrasena}' ;" ;        

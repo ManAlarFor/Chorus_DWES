@@ -57,3 +57,7 @@ ALTER TABLE `Usuario`
 ALTER TABLE `Usuario`
   MODIFY `IdUsu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
+
+UPDATE Usuario
+SET ContrasenaUsu = MD5(ContrasenaUsu)
+WHERE ContrasenaUsu IS NOT NULL;
