@@ -8,19 +8,22 @@
 
             <!-- BUSCADOR -->
 
-            <?php if(!empty($_SESSION)): ?>
-
+            
             <li class="nav-item">
 
-                <a class="nav-link" href="/subpages/displaying/search.php" id="navbar" role="button" data-bs-toggle="" aria-expanded="false">
-                    <i class="bi bi-search"></i>
-                </a>
+                <?php if(!empty($_SESSION)): ?>
+                    <a class="nav-link" href="/subpages/displaying/search.php" id="navbar" role="button" data-bs-toggle="" aria-expanded="false">
+                        <i class="bi bi-search"></i>
+                    </a>
+                <?php else: ?>
+                    <a class="nav-link" href="https://github.com/ManAlarFor/Chorus_DWES" id="navbar" role="button" data-bs-toggle="" aria-expanded="false">
+                        <i class="bi bi-github fs-4 text-dark"></i>
+                    </a>
+                <?php endif ; ?>
 
             </li>
 
             <!-- ENLACE A PÁGINA PRINCIPAL -->
-
-            <?php endif ; ?>
 
             <li class="profile-pic">
                 <a class="nav-link" href="/"><img src="/assets/img/chorusIcon.png" alt=""></a>
